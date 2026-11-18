@@ -7,16 +7,16 @@ interface Props {
   onResume: () => void;
 }
 
-const circles: { cls: string; n?: string; label?: string }[] = [
-  { cls: 'bg-accent-lime' },
-  { cls: 'bg-brand-500 text-white', n: String(questions.length), label: 'Questions' },
-  { cls: 'bg-accent-sky' },
-  { cls: 'bg-accent-pink text-white', n: '~5', label: 'Minutes' },
-  { cls: 'bg-accent-peach' },
-  { cls: 'bg-accent-green text-white', n: '3', label: 'Skills' },
-  { cls: 'bg-accent-sky' },
-  { cls: 'bg-accent-orange' },
-  { cls: 'bg-brand-600' },
+const sampleSkills: [string, number, string][] = [
+  ['Vocabulary', 88, 'bg-accent-green'],
+  ['Grammar', 79, 'bg-accent-green'],
+  ['Reading', 80, 'bg-accent-green'],
+];
+
+const chips: [string, string][] = [
+  [`📝 ${questions.length} questions`, 'left-12 top-1'],
+  ['⏱️ ~5 minutes', 'right-0 top-[18%]'],
+  ['🎯 3 skills scored', 'bottom-[12%] right-2'],
 ];
 
 const steps = [
@@ -59,17 +59,44 @@ export default function Landing({ hasProgress, onStart, onResume }: Props) {
             </div>
           </div>
 
-          {/* Decorative circle collage with the key numbers */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-3">
-            {circles.map((c, i) => (
-              <div key={i} className={`grid aspect-square place-items-center rounded-full text-center ${c.cls}`}>
-                {c.n && (
-                  <span>
-                    <span className="block text-2xl font-extrabold sm:text-3xl">{c.n}</span>
-                    <span className="block text-[11px] font-bold uppercase tracking-wide opacity-90">{c.label}</span>
-                  </span>
-                )}
+          {/* Hero visual: playful shapes behind a sample scorecard */}
+          <div className="relative mx-auto h-[340px] w-full max-w-[380px] sm:h-[380px]">
+            {/* background shapes */}
+            <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-accent-lime sm:h-48 sm:w-48" />
+            <div className="absolute bottom-2 left-0 h-36 w-36 rounded-full bg-accent-sky sm:h-44 sm:w-44" />
+            <div className="absolute bottom-0 right-6 h-20 w-40 rounded-t-full bg-accent-orange" />
+            <div className="absolute left-6 top-4 h-14 w-14 rounded-full bg-accent-pink" />
+            <div className="absolute right-2 top-[45%] h-10 w-10 rounded-full bg-brand-600" />
+
+            {/* sample result card */}
+            <div className="absolute left-1/2 top-1/2 w-[260px] -translate-x-1/2 -translate-y-1/2 rotate-[-2deg] rounded-3xl bg-white p-5 shadow-2xl shadow-brand-700/20">
+              <div className="flex items-center gap-3">
+                <div className="grid h-14 w-14 place-items-center rounded-full border-[5px] border-accent-green text-sm font-extrabold">82%</div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-ink-soft">Sample result</p>
+                  <p className="font-extrabold text-accent-green">Ready to book ✓</p>
+                </div>
               </div>
+              <div className="mt-4 space-y-2.5">
+                {sampleSkills.map(([name, pct, color]) => (
+                  <div key={name}>
+                    <div className="flex justify-between text-xs font-semibold">
+                      <span>{name}</span>
+                      <span className="text-ink-soft">{pct}%</span>
+                    </div>
+                    <div className="mt-1 h-1.5 rounded-full bg-ink-line">
+                      <div className={`h-full rounded-full ${color}`} style={{ width: `${pct}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* floating fact chips */}
+            {chips.map(([text, pos]) => (
+              <span key={text} className={`absolute rounded-full bg-white px-3 py-1.5 text-xs font-bold text-brand-600 shadow-lg ${pos}`}>
+                {text}
+              </span>
             ))}
           </div>
         </div>
