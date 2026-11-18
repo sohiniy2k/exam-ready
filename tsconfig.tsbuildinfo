@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/landing.tsx","./src/components/quiz.tsx","./src/components/results.tsx","./src/config/scoring.ts","./src/data/questions.ts","./src/data/topics.ts","./src/lib/readiness.test.ts","./src/lib/readiness.ts"],"version":"5.6.3"}
